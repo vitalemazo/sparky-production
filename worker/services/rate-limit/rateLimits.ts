@@ -92,7 +92,27 @@ export class RateLimitService {
         
         switch (rateLimitConfig.store) {
             case RateLimitStore.RATE_LIMITER: {
-                const result = await (env[rateLimitConfig.bindingName as keyof Env] as RateLimit).limit({ key });
+                if (!('bindingName' in rateLimitConfig)) {
+                    this.logger.warn('Rate limiter config missing bindingName, skipping enforcement', {
+                        limitType,
+                        key,
+                    });
+                    success = true;
+                    break;
+                }
+
+                const rateLimiterBinding = env[rateLimitConfig.bindingName as keyof Env];
+                if (!rateLimiterBinding || typeof (rateLimiterBinding as Record<string, unknown>).limit !== 'function') {
+                    this.logger.warn('Rate limiter binding not available in environment, skipping enforcement', {
+                        limitType,
+                        binding: rateLimitConfig.bindingName,
+                    });
+                    success = true;
+                    break;
+                }
+
+                const rateLimiter = rateLimiterBinding as unknown as RateLimit;
+                const result = await rateLimiter.limit({ key });
                 success = result.success;
                 break;
             }

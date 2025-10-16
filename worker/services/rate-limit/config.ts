@@ -54,8 +54,8 @@ export enum RateLimitType {
 }
 
 export interface RateLimitSettings {
-	[RateLimitType.API_RATE_LIMIT]: RLRateLimitConfig;
-	[RateLimitType.AUTH_RATE_LIMIT]: RLRateLimitConfig;
+	[RateLimitType.API_RATE_LIMIT]: RLRateLimitConfig | KVRateLimitConfig | DORateLimitConfig;
+	[RateLimitType.AUTH_RATE_LIMIT]: RLRateLimitConfig | KVRateLimitConfig | DORateLimitConfig;
 	[RateLimitType.APP_CREATION]: DORateLimitConfig | KVRateLimitConfig;
 	[RateLimitType.LLM_CALLS]: LLMCallsRateLimitConfig;
 }
@@ -63,13 +63,15 @@ export interface RateLimitSettings {
 export const DEFAULT_RATE_LIMIT_SETTINGS: RateLimitSettings = {
 	apiRateLimit: {
 		enabled: true,
-		store: RateLimitStore.RATE_LIMITER,
-		bindingName: 'API_RATE_LIMITER',
+		store: RateLimitStore.DURABLE_OBJECT,
+		limit: 100,
+		period: 60, // 1 minute
 	},
 	authRateLimit: {
 		enabled: true,
-		store: RateLimitStore.RATE_LIMITER,
-		bindingName: 'AUTH_RATE_LIMITER',
+		store: RateLimitStore.DURABLE_OBJECT,
+		limit: 50,
+		period: 60, // 1 minute
 	},
 	appCreation: {
 		enabled: true,

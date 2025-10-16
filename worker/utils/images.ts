@@ -76,10 +76,13 @@ export async function uploadImage(env: Env, image: ImageAttachment, type: ImageT
     const hashPromise = hashImageB64url(image.base64Data!);
     // Compute bytes once for both CF Images and R2
     const bytes = base64ToUint8Array(image.base64Data!);
+    const useCloudflareImages =
+        env.USE_CLOUDFLARE_IMAGES === true ||
+        env.USE_CLOUDFLARE_IMAGES === 'true';
 
     // Obtain CF Images URL first (when enabled) so we can pass it into R2 metadata
     let cfImagesUrl = '';
-    if (env.USE_CLOUDFLARE_IMAGES) {
+    if (useCloudflareImages) {
         try {
             cfImagesUrl = await uploadImageToCloudflareImages(env, image, type, bytes);
         } catch (err) {

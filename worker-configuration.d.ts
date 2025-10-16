@@ -48,10 +48,8 @@ declare namespace Cloudflare {
 		TEMPLATES_BUCKET: R2Bucket;
 		DB: D1Database;
 		DISPATCHER: DispatchNamespace;
-		API_RATE_LIMITER: RateLimit;
-		AUTH_RATE_LIMITER: RateLimit;
 		AI: Ai;
-		USE_CLOUDFLARE_IMAGES: boolean;
+		USE_CLOUDFLARE_IMAGES: string | boolean;
 		CF_VERSION_METADATA: WorkerVersionMetadata;
 		ASSETS: Fetcher;
 	}
