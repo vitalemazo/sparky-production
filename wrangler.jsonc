@@ -90,10 +90,10 @@
         "remote": true
       }
     ],
-    "kv_namespaces": [
+	"kv_namespaces": [
         {
             "binding": "VibecoderStore",
-            "id": "6e54f8042eed4dca824cc941332db7e2",
+            "id": "71698654147c4a6094ee1ff9f1ba3f78",
             "remote": true
         }
     ],
