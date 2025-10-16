@@ -35,6 +35,13 @@
 		"binding": "AI",
         "remote": true
 	},
+    "dispatch_namespaces": [
+        {
+            "binding": "DISPATCHER",
+            "namespace": "vibesdk-default-namespace",
+            "remote": true
+        }
+    ],
 	"containers": [
 		{
 			"class_name": "UserAppSandboxService",
@@ -86,6 +93,7 @@
 	"kv_namespaces": [
         {
             "binding": "VibecoderStore",
+
             "id": "71698654147c4a6094ee1ff9f1ba3f78",
             "remote": true
         }
